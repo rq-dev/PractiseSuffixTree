@@ -139,30 +139,27 @@ public class SuffixTree {
                     task.push(i.getChild(c));
                 }
 
-                for (int k = 0; k < vertexes.size(); k++) {
-                    Boolean[] ret = new Boolean[2];
-                    ret[0] = Boolean.FALSE;
-                    ret[1] = Boolean.FALSE;
-                    for (Character c : vertexes.get(k).getChildren().keySet()) {
-                        if(vertexes.get(k).getChild(c).getType()[0]) ret[0] = Boolean.TRUE;
-                        if(vertexes.get(k).getChild(c).getType()[1]) ret[1] = Boolean.TRUE;
-                    }
-                    vertexes.get(k).setType(ret[0], ret[1]);
-                }
+                markHelper(vertexes);
 
                 continue;
             }
         }
-        for (int k = 0; k < vertexes.size(); k++) {
+        markHelper(vertexes);
+    }
+
+    public void markHelper(ArrayList<SuffixNode> n ){
+        for (int k = 0; k < n.size(); k++) {
             Boolean[] types = new Boolean[2];
             types[0] = Boolean.FALSE;
             types[1] = Boolean.FALSE;
-            for (Character c : vertexes.get(k).getChildren().keySet()) {
-                if(vertexes.get(k).getChild(c).getType()[0]) types[0] = Boolean.TRUE;
-                if(vertexes.get(k).getChild(c).getType()[1]) types[1] = Boolean.TRUE;
+            for (Character c : n.get(k).getChildren().keySet()) {
+                if(n.get(k).getChild(c).getType()[0]) types[0] = Boolean.TRUE;
+                if(n.get(k).getChild(c).getType()[1]) types[1] = Boolean.TRUE;
             }
-            vertexes.get(k).setType(types[0], types[1]);
+            n.get(k).setType(types[0], types[1]);
         }
+
+
     }
 
     public String getLongestCommonSubstring() {
